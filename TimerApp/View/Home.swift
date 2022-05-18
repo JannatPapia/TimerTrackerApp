@@ -97,11 +97,40 @@ struct Home: View {
             Color.purple.opacity(0.08)
                 .ignoresSafeArea()
         }
+        .overlay(content: {
+            ZStack{
+                Color.black
+                    .opacity(pomodoroModel.addNewTimer ? 0.25 : 0)
+                    .onTapGesture {
+                        pomod
+                    }
+                
+                NewTimerView()
+                    .frame(maxHidth: .infinity, alignment: .bottom)
+                    .offset(y: PomodoroModel.addNewTimer ? 0 : 400)
+            }
+            .animation(.easeInOut, value: PomodoroModel.addNewTimer)
+        })
         .preferredColorScheme(.dark)
     }
     
     //MARK: New Timer Bottom Sheet
-    
+    @ViewBuilder
+    func NewTimerView() -> some View {
+        VStack(spacing: 15) {
+            Text("Add New Timer")
+                .font(.title2.bold())
+                .foregroundColor(.white)
+                .padding(.top, 10)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background{
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color.purple)
+                .ignoresSafeArea()
+        }
+    }
 }
 
 struct Home_Previews: PreviewProvider {
